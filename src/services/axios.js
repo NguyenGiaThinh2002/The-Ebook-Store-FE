@@ -2,8 +2,8 @@ import axios from "axios";
 import { getRegion } from "./region";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3000",
-  // baseURL: "http://192.168.1.15:3000",
+  // baseURL: "http://localhost:3000",
+  baseURL: "http://192.168.1.29:3000",
 });
 
 // Add region to every request as a **header**

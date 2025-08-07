@@ -1,5 +1,5 @@
 <template>
-  <theHeader v-if="!selectedItem" />
+  <theHeader v-if="!isModalVisible" />
   <div class="container menu-wrap">
     <div
       class="container collections"
@@ -12,7 +12,9 @@
     >
       <div class="product-title">
         <h3>My Collections</h3>
+        <!-- <button @click="isModalVisible = true">Open PDF Book</button> -->
       </div>
+      <PdfModal v-model="isModalVisible" :pdfUrl="pdfUrl" />
       <div class="card-products">
         <div class="product-list" style="display: flex">
           <div
@@ -38,7 +40,6 @@
             v-if="selectedItem"
             class="iframe-overlay"
             @click.self="closeIframe"
-            @contextmenu.prevent
           >
             <div class="iframe-container">
               <iframe
@@ -46,9 +47,6 @@
                 width="100%"
                 height="100%"
                 frameborder="0"
-                sandbox="allow-same-origin allow-scripts"
-                scrolling="no"
-                @contextmenu.prevent
               ></iframe>
               <button class="close-btn" @click="closeIframe">×</button>
             </div>
@@ -65,17 +63,22 @@ import theHeader from "../components/theHeader.vue";
 import theFooter from "../components/theFooter.vue";
 import sidebar from "./sidebar.vue";
 import axios from "../services/axios";
+import PdfModal from "../components/PdfModal.vue";
 
 export default {
   components: {
     theHeader,
     theFooter,
     sidebar,
+    PdfModal,
   },
   data() {
     return {
       products: [],
       selectedItem: null,
+      isModalVisible: false,
+      pdfUrl:
+        "https://cdn.shopify.com/s/files/1/2081/8163/files/005-SUNNY-MEADOWS-WOODLAND-SCHOOL-Free-Childrens-Book-By-Monkey-Pen.pdf?v=1589846892",
     };
   },
   created() {
@@ -86,11 +89,11 @@ export default {
   },
   methods: {
     openIframe(item) {
-      this.selectedItem = {
-        ...item,
-        file_url: `${item.file_url}#toolbar=0&navpanes=0&scrollbar=0`,
-      };
+      this.pdfUrl = item.file_url;
+      this.isModalVisible = true;
+      // this.selectedItem = item;
     },
+
     closeIframe() {
       this.selectedItem = null;
     },
@@ -119,15 +122,10 @@ export default {
 .iframe-container {
   position: relative;
   width: 80%;
-  max-width: 800px;
-  height: 80%;
+  height: 95%;
   background: white;
   border-radius: 8px;
   overflow: hidden;
-}
-
-iframe {
-  pointer-events: none; /* Prevents direct interaction with iframe content */
 }
 
 .close-btn {

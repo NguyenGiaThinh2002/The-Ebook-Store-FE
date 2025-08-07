@@ -1,21 +1,20 @@
-
-
 <template>
   <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
 
-    <!-- <title>{{ title }}</title> -->
-    <link rel="icon" href="./assets/banner_home/logo.png">
-     </head>
+    <!-- <link rel="icon" href="./assets/banner_home/logo.png" /> -->
+  </head>
   <div id="app">
-    <router-view> 
-    </router-view>
+    <router-view> </router-view>
   </div>
-  
 </template>
 
 <style scoped>
-
 header {
   line-height: 1.5;
 }
@@ -44,25 +43,9 @@ header {
 }
 </style>
 <script>
-    export default {
-    //   created(){
-    //     this.auth();
-    //   },
-      
-    //   methods:{
-    //     auth(){
-    //       if(localStorage.getItem('userId') == null){
-    //         this.$router.push('/login')
-    //     }
-    //   }
-    // },
-      data() {
-        return {}
-      },
-    
-  }
-// import 'bootstrap/dist/css/bootstrap.css'
-// import 'bootstrap-vue/dist/bootstrap-vue.css'
+export default {
+  data() {
+    return {};
+  },
+};
 </script>
-
-

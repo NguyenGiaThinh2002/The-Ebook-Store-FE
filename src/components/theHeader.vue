@@ -49,7 +49,7 @@
             </router-link>
 
             <router-link
-              to="/collections/Coffee"
+              to="/collections/MyCollection"
               style="text-decoration: none !important"
             >
               <li class="nav-item active">
@@ -92,7 +92,7 @@
                   </li>
                 </router-link>
                 <router-link
-                  to="/collections/Coffee"
+                  to="/collections/MyCollection"
                   style="text-decoration: none !important"
                 >
                   <li>
@@ -307,11 +307,6 @@ export default {
       this.isLogined = true;
     }
     this.region = getRegion();
-
-    axios.get(`/admin`).then((res) => {
-      // console.log(res.data);
-      this.user = res.data.find((user) => user.phone == this.userId);
-    });
 
     axios.get(`/ebook/getUserBalance/${this.userId}`).then((res) => {
       this.balance = res.data.balance;
