@@ -1,0 +1,36 @@
+{
+  "name": "vue3",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@paypal/paypal-js": "^8.2.0",
+    "@zakerxa/vue-multiple-image-upload": "^1.0.8",
+    "axios": "^1.4.0",
+    "bcrypt": "^5.1.1",
+    "bootstrap": "^5.3.2",
+    "bootstrap-vue": "^2.23.1",
+    "chart": "^0.1.2",
+    "chart.js": "^4.4.0",
+    "process": "^0.11.10",
+    "vue": "^3.3.4",
+    "vue-chartjs": "^5.2.0",
+    "vue-pdf": "^4.3.0",
+    "vue-router": "^4.2.4",
+    "vue-upload-image": "^1.1.5",
+    "vue-upload-multiple-image": "^1.1.6",
+    "vuejs-paginate": "^2.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.3.1",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-optipng": "^8.0.0",
+    "imagemin-svgo": "^11.0.1",
+    "imagemin-webpack-plugin": "^2.4.2",
+    "vite": "^4.4.9"
+  }
+}
