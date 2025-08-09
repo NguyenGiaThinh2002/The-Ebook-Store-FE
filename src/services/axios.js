@@ -2,7 +2,9 @@ import axios from "axios";
 import { getRegion } from "./region";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://the-ebook-store-be.vercel.app",
+
+  // baseURL: "http://localhost:3000",
   // baseURL: "http://192.168.1.29:3000",
 });
 
