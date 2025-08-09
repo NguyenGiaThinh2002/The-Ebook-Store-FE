@@ -186,18 +186,32 @@ export default {
         alert("Vui Long Dang Nhap");
       } else {
         if (this.region == "japan") {
+          const token = localStorage.getItem("token");
           const userId = localStorage.getItem("userId");
-          const res = await axios.get(`/ebook/getUserBalance/${userId}`);
+          const res = await axios.get(`/ebook/getUserBalance/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
           console.log("user balance", res.data.balance);
           if (product.point_price > res.data.balance) {
             alert("Account's Balance is not enough to buy");
           } else {
             const response = await axios
-              .post("/ebook/makePurchase", {
-                user_id: Number(userId),
-                ebook_id: product.id,
-                paid_with_point: true,
-              })
+              .post(
+                "/ebook/makePurchase",
+                {
+                  user_id: Number(userId),
+                  ebook_id: product.id,
+                  paid_with_point: true,
+                },
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              )
               .then(() => {
                 alert("Buy book successfully");
                 location.reload();
@@ -285,6 +299,7 @@ div .thisProduct {
 
 div .product-related-info {
   margin: 0 4%;
+  height: 400px;
 }
 
 div .card-info-thisProduct {

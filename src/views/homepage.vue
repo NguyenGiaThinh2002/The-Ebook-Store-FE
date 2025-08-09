@@ -1,12 +1,11 @@
 <template lang="">
-  <!-- <link rel="icon" href="../assets/banner_home/p1.png">  -->
   <body class="body">
     <div class="loader_overlay loaded"></div>
     <theHeader />
-    <!-- Carousel -->
+
+    <!-- Banner -->
     <section class="banner-home">
       <div id="demo" class="carousel slide" data-bs-ride="carousel">
-        <!-- Indicators/dots -->
         <div class="carousel-indicators">
           <button
             type="button"
@@ -25,14 +24,11 @@
             data-bs-slide-to="2"
           ></button>
         </div>
-
-        <!-- The slideshow/carousel -->
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img
               src="../assets/bookstore/1.jpg"
               height="700px"
-              alt="Los Angeles"
               class="d-block w-100"
             />
           </div>
@@ -40,7 +36,6 @@
             <img
               src="../assets/bookstore/2.jpg"
               height="700px"
-              alt="Chicago"
               class="d-block w-100"
             />
           </div>
@@ -48,13 +43,10 @@
             <img
               src="../assets/bookstore/3.jpg"
               height="700px"
-              alt="New York"
               class="d-block w-100"
             />
           </div>
         </div>
-
-        <!-- Left and right controls/icons -->
         <button
           class="carousel-control-prev"
           type="button"
@@ -73,24 +65,19 @@
         </button>
       </div>
     </section>
+
+    <!-- Ebook List -->
     <section class="menu-home">
       <div style="display: block; z-index: 1; position: relative; width: 100%">
         <div
           class="menu_list_home flex_wrap display_flex"
-          style="
-            justify-content: center;
-            align-item: center;
-            align-content: center;
-          "
+          style="justify-content: center; align-items: center"
         >
           <h1>EBook List</h1>
-          <!-- <div class="card-products card-container flex" > -->
         </div>
-        <!-- Outer flex container -->
         <div
           style="
             width: 90%;
-            height: auto;
             display: flex;
             flex-wrap: wrap;
             gap: 16px;
@@ -98,12 +85,16 @@
             align-content: flex-start;
           "
         >
-          <!-- Flex items (product cards) -->
           <div
-            v-for="(item, index) in products"
+            v-for="item in paginatedProducts"
             :key="item.id"
             class="container collections"
-            style="flex: 1 1 calc(30% - 16px); width: 350px; max-width: 400px"
+            style="
+              flex: 1 1 calc(30% - 16px);
+              width: 350px;
+              max-width: 400px;
+              height: 400px;
+            "
           >
             <div class="card-products">
               <div class="card">
@@ -133,8 +124,31 @@
             </div>
           </div>
         </div>
+
+        <!-- Pagination Controls -->
+        <div style="display: flex; justify-content: center; margin: 20px 0">
+          <button
+            @click="prevPage"
+            :disabled="currentPage === 1"
+            class="btn btn-primary"
+            style="margin-right: 10px"
+          >
+            Prev
+          </button>
+          <span>Page {{ currentPage }} / {{ totalPages }}</span>
+          <button
+            @click="nextPage"
+            :disabled="currentPage === totalPages"
+            class="btn btn-primary"
+            style="margin-left: 10px"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </section>
+
+    <!-- Book Samples -->
     <section>
       <div class="container" style="width: 100%">
         <h1 style="margin-left: 4%">Các Mẫu Sách</h1>
@@ -147,92 +161,81 @@
           src="https://cdn.shopify.com/s/files/1/2081/8163/files/001_90f0323d-1f0a-4f1d-9584-062f868e5473.jpg"
           class="shop_space"
           style="width: 45%; height: 600px"
-          alt=""
         />
-
         <img
           src="https://cdn.shopify.com/s/files/1/2081/8163/files/010-CAPTAIN-FANTASTIC-th.jpg"
           class="shop_space"
           style="width: 45%; height: 600px"
-          alt=""
         />
-
         <img
           src="https://cdn.shopify.com/s/files/1/2081/8163/files/005-SUNNY-MEADOWS-WOODLAND-SCHOOL-th.jpg"
           class="shop_space"
           style="width: 45%; height: 600px"
-          alt=""
         />
-
         <img
           src="https://raw.githubusercontent.com/redlogs1st/cnd_ebook/refs/heads/main/ebookSource/01/001-HIDE-AND-SEEK-free-childrens-books-1.avif"
           class="shop_space"
           style="width: 45%; height: 600px"
-          alt=""
         />
       </div>
     </section>
   </body>
   <theFooter />
 </template>
-<!-- v-bind:src="products.p1" -->
+
 <script>
 import theHeader from "../components/theHeader.vue";
 import theFooter from "../components/theFooter.vue";
 import axios from "../services/axios";
 import { getRegion } from "../services/region";
+
 export default {
   created() {
     this.userId = localStorage.getItem("userId");
     this.getOrder();
     this.region = getRegion();
-
     if (!this.userId) {
       localStorage.setItem("userRegion", "japan");
     }
   },
   data() {
     return {
-      product: {
-        userId: "",
-      },
       products: [],
       region: "",
+      currentPage: 1,
+      pageSize: 15,
     };
   },
-  components: {
-    theFooter,
-    theHeader,
+  computed: {
+    totalPages() {
+      return Math.ceil(this.products.length / this.pageSize);
+    },
+    paginatedProducts() {
+      const start = (this.currentPage - 1) * this.pageSize;
+      return this.products.slice(start, start + this.pageSize);
+    },
   },
-  mounted() {
-    const userId = localStorage.getItem("userId");
-    if (userId) {
-      // You have the user ID, you can use it as needed
-      console.log("User ID:", userId);
-    } else {
-      // User ID not found in localStorage
-      console.log("User ID not found");
-    }
-  },
+  components: { theFooter, theHeader },
   methods: {
     getOrder() {
-      axios
-        .get(`/ebook/getEbooks`, {
-          params: {
-            region: "vietnam",
-            // region: "japan",
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
-          // this.Orders = res.data; // .filter((orders) => orders.isShipped === false);
-          this.products = res.data;
-        });
+      axios.get(`/ebook/getEbooks`).then((res) => {
+        this.products = res.data;
+      });
     },
-    getUserBalance() {},
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
   },
 };
 </script>
+
 <style>
 body .body {
   max-width: 100%;

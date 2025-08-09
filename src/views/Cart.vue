@@ -71,6 +71,7 @@ export default {
   },
   methods: {
     renderPayPalButton() {
+      const token = localStorage.getItem("token");
       window.paypal
         .Buttons({
           createOrder: (data, actions) => {
@@ -87,9 +88,17 @@ export default {
           onApprove: (data, actions) => {
             return actions.order.capture().then((details) => {
               axios
-                .put(`/ebook/updateUserBalance/${this.userId}`, {
-                  point: this.calculatedPoints,
-                })
+                .put(
+                  `/ebook/updateUserBalance/${this.userId}`,
+                  {
+                    point: this.calculatedPoints,
+                  },
+                  {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                )
                 .then((response) => {
                   console.log("Balance updated:", response.data.balance);
                   alert(

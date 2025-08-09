@@ -104,7 +104,7 @@
             </p>
             <p>
               <i class="fas fa-envelope mr-3 text-white">
-                nguyengiathinh@gmail.com
+                daohuyhieu@gmail.com
               </i>
             </p>
             <p>
@@ -124,7 +124,7 @@
             Copyright @2023 All rights reserved by:
             <a>
               <!-- <strong class="" style="text-decoration: none;">The Providers</strong> -->
-              Nguyen Gia Thinh
+              Dao Huy Hieu
             </a>
           </p>
         </div>

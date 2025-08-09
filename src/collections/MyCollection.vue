@@ -1,15 +1,7 @@
 <template>
   <theHeader v-if="!isModalVisible" />
-  <div class="container menu-wrap">
-    <div
-      class="container collections"
-      style="
-        display: block;
-        min-width: 500px;
-        max-width: 500px;
-        margin-left: 200px;
-      "
-    >
+  <div class="container menu-wrap" style="min-width: 2000px">
+    <div>
       <div class="product-title">
         <h3>My Collections</h3>
         <!-- <button @click="isModalVisible = true">Open PDF Book</button> -->
@@ -17,11 +9,7 @@
       <PdfModal v-model="isModalVisible" :pdfUrl="pdfUrl" />
       <div class="card-products">
         <div class="product-list" style="display: flex">
-          <div
-            v-for="(item, index) in products"
-            :key="item.id"
-            class="container collections"
-          >
+          <div v-for="(item, index) in products" :key="item.id">
             <div class="card" @click="openIframe(item)">
               <img class="card-thumb" :src="item.imgUrl" />
               <div class="card-info">
@@ -83,9 +71,16 @@ export default {
   },
   created() {
     const userId = localStorage.getItem("userId");
-    axios.get(`/ebook/getPurchasedBooks/${userId}`).then((res) => {
-      this.products = res.data;
-    });
+    const token = localStorage.getItem("token");
+    axios
+      .get(`/ebook/getPurchasedBooks/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        this.products = res.data;
+      });
   },
   methods: {
     openIframe(item) {
@@ -198,5 +193,11 @@ div .product-title {
 div .menu-list-collectiions {
   display: flex;
   flex-wrap: wrap;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap; /* ✅ Makes items wrap to next line */
+  gap: 1rem; /* Optional: space between items */
 }
 </style>

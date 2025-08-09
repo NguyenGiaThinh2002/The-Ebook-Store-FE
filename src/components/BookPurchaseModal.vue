@@ -72,6 +72,7 @@ export default {
   },
   methods: {
     renderPayPalButton() {
+      const token = localStorage.getItem("token");
       window.paypal
         .Buttons({
           createOrder: (data, actions) => {
@@ -88,11 +89,19 @@ export default {
           onApprove: (data, actions) => {
             return actions.order.capture().then((details) => {
               axios
-                .post("/ebook/makePurchase", {
-                  user_id: Number(this.userId),
-                  ebook_id: this.purchaseInfo.id,
-                  paid_with_point: false,
-                })
+                .post(
+                  "/ebook/makePurchase",
+                  {
+                    user_id: Number(this.userId),
+                    ebook_id: this.purchaseInfo.id,
+                    paid_with_point: false,
+                  },
+                  {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                )
                 .then(() => {
                   alert("Buy book successfully");
                   close();

@@ -205,7 +205,10 @@
             </li>
             <li></li>
 
-            <li class="nav-item" v-if="region === 'japan'">
+            <li
+              class="nav-item"
+              v-if="region === 'japan' && this.isLogined === true"
+            >
               <a class="nav-link" href="#" style="color: black"
                 >User Point: {{ balance }}</a
               >
@@ -215,7 +218,7 @@
         <router-link
           to="/offerProduct/cart"
           style="text-decoration: none !important"
-          v-if="region === 'japan'"
+          v-if="region === 'japan' && this.isLogined === true"
         >
           <div class="cart-button" style="margin: 0 30px">
             <span class="cart-icon">
@@ -303,14 +306,22 @@ export default {
   created() {
     // Fetch and set the token from localStorage
     this.userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+
     if (this.userId !== null && this.userId !== "") {
       this.isLogined = true;
     }
     this.region = getRegion();
 
-    axios.get(`/ebook/getUserBalance/${this.userId}`).then((res) => {
-      this.balance = res.data.balance;
-    });
+    axios
+      .get(`/ebook/getUserBalance/${this.userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        this.balance = res.data.balance;
+      });
   },
 };
 

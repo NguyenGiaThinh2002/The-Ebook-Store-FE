@@ -138,15 +138,10 @@ export default {
           .post(`/ebook/login`, this.user1) // /login
           .then((res) => {
             const userId = phone; // Replace with the actual user ID
-            // console.log("res.user", res.data.user.id);
             localStorage.setItem("userId", res.data.user.id);
+            localStorage.setItem("token", res.data.token);
             setRegion(res.data.user.region);
-            console.log("region", res.data.user.region);
             document.location.href = "/";
-
-            // const token = response.data.token;
-            // Store the token in localStorage.
-            // console.log(token);
           })
           .catch((err) => {
             console.log(err);
@@ -183,6 +178,7 @@ export default {
       const data = await res.json();
       console.log(data.countryName);
       this.user.region = data.countryName;
+      setRegion(data.countryName.toLowerCase());
 
       if (password != passwordcfm) {
         alert("incorrect password");
