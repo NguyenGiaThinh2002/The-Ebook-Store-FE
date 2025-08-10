@@ -5,10 +5,10 @@
     <div class="main-wrapper">
       <div class="checkout-container">
         <h1 class="main-title">Buy Points</h1>
-        <h2 class="conversion-info">1 USD = 20 Points</h2>
+        <h2 class="conversion-info">1 ¥ = 1 Point</h2>
 
         <div class="input-section">
-          <label for="amount-input">Enter the amount in USD:</label>
+          <label for="amount-input">Enter the amount in JPY:</label>
           <input
             id="amount-input"
             type="number"
@@ -32,6 +32,7 @@
   </div>
 </template>
 
+<!-- For Japanese Yen page -->
 <script>
 import theHeader from "../components/theHeader.vue";
 import theFooter from "../components/theFooter.vue";
@@ -51,13 +52,40 @@ export default {
   },
   computed: {
     calculatedPoints() {
-      return this.dollarAmount * 20;
+      return this.dollarAmount;
     },
   },
   created() {
     this.userId = localStorage.getItem("userId") || "";
   },
   mounted() {
+    // Remove any existing PayPal SDK
+    const oldScript = document.querySelector(
+      `script[src*="paypal.com/sdk/js"]`
+    );
+    if (oldScript) oldScript.remove();
+
+    // Load PayPal SDK with JPY
+    const script = document.createElement("script");
+    script.src = `https://www.paypal.com/sdk/js?client-id=AYBCfZjWyVpK3rBsBOZ9XHSEb7AAyPvrmYaT7J-JzFD8SwX-QDzyY8qRv9PrxJSi42dJ-clcL884z7ai&currency=JPY`;
+    script.async = true;
+    script.onload = () => {
+      window.paypal
+        .Buttons({
+          createOrder: (data, actions) => {
+            return actions.order.create({
+              purchase_units: [{ amount: { value: "500" } }],
+            });
+          },
+          onApprove: (data, actions) => {
+            return actions.order.capture().then((details) => {
+              alert(`Paid by ${details.payer.name.given_name}`);
+            });
+          },
+        })
+        .render("#paypal-button-container");
+    };
+    document.body.appendChild(script);
     if (window.paypal) {
       this.renderPayPalButton();
     } else {

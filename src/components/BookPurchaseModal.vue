@@ -39,11 +39,40 @@ export default {
     },
   },
   emits: ["close"],
+
   data() {
     return {
       userId: "",
       dollarAmount: 5,
     };
+  },
+  mounted() {
+    const oldScript = document.querySelector(
+      `script[src*="paypal.com/sdk/js"]`
+    );
+    if (oldScript) oldScript.remove();
+
+    // Load PayPal SDK with JPY
+    const script = document.createElement("script");
+    script.src = `https://www.paypal.com/sdk/js?client-id=AYBCfZjWyVpK3rBsBOZ9XHSEb7AAyPvrmYaT7J-JzFD8SwX-QDzyY8qRv9PrxJSi42dJ-clcL884z7ai&currency=USD`;
+    script.async = true;
+    script.onload = () => {
+      window.paypal
+        .Buttons({
+          createOrder: (data, actions) => {
+            return actions.order.create({
+              purchase_units: [{ amount: { value: "500" } }],
+            });
+          },
+          onApprove: (data, actions) => {
+            return actions.order.capture().then((details) => {
+              alert(`Paid by ${details.payer.name.given_name}`);
+            });
+          },
+        })
+        .render("#paypal-button-container");
+    };
+    document.body.appendChild(script);
   },
   computed: {
     calculatedPoints() {

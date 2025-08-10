@@ -20,6 +20,16 @@ const props = defineProps({
   modelValue: { type: Boolean, required: true }, // for v-model
 });
 
+const disableContextMenu = () => {
+  if (!viewerRef.value) return;
+
+  // Prevent right-click
+  viewerRef.value.addEventListener("contextmenu", (e) => e.preventDefault());
+
+  // Prevent drag events
+  viewerRef.value.addEventListener("dragstart", (e) => e.preventDefault());
+};
+
 const emit = defineEmits(["update:modelValue"]);
 
 const isOpen = ref(false);
@@ -64,6 +74,10 @@ const renderPDF = async (url) => {
       canvas.height = viewport.height;
       canvas.width = viewport.width;
 
+      // 🚫 Disable right-click & dragging for this canvas
+      canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+      canvas.addEventListener("dragstart", (e) => e.preventDefault());
+
       viewerRef.value.appendChild(canvas);
 
       await page.render({ canvasContext: context, viewport }).promise;
@@ -100,7 +114,9 @@ defineExpose({ open, close });
   display: block;
   margin: 1rem auto;
   border: 1px solid #ccc;
+  pointer-events: none; /* 🚫 disables click/hover entirely */
 }
+
 .close-btn {
   position: absolute;
   top: 10px;

@@ -177,7 +177,7 @@ export default {
       const data = await res.json();
       this.user.region = data.countryName;
       setRegion(data.countryName.toLowerCase());
-
+      console.log("country name: ", data.countryName.toLowerCase());
       if (password != passwordcfm) {
         alert("incorrect password");
         Event.preventDefault();
