@@ -157,10 +157,7 @@ export default {
 
   methods: {
     getProduct() {
-      console.log("item id", this.$route.params.id);
-
       axios.get(`/ebook/getEbooks`).then((res) => {
-        console.log(res.data);
         this.product = res.data.find(
           (product) => product.id == this.$route.params.id
         );
@@ -194,7 +191,6 @@ export default {
             },
           });
 
-          console.log("user balance", res.data.balance);
           if (product.point_price > res.data.balance) {
             alert("Account's Balance is not enough to buy");
           } else {

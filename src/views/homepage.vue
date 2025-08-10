@@ -203,7 +203,7 @@ export default {
       products: [],
       region: "",
       currentPage: 1,
-      pageSize: 15,
+      pageSize: 20,
     };
   },
   computed: {

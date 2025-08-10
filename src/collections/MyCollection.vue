@@ -9,7 +9,11 @@
       <PdfModal v-model="isModalVisible" :pdfUrl="pdfUrl" />
       <div class="card-products">
         <div class="product-list" style="display: flex">
-          <div v-for="(item, index) in products" :key="item.id">
+          <div
+            v-for="(item, index) in products"
+            :key="item.id"
+            style="height: 400px"
+          >
             <div class="card" @click="openIframe(item)">
               <img class="card-thumb" :src="item.imgUrl" />
               <div class="card-info">

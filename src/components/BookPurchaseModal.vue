@@ -107,21 +107,6 @@ export default {
                   close();
                   // location.reload();
                 });
-              // axios
-              //   .put(`/ebook/updateUserBalance/${this.userId}`, {
-              //     point: this.calculatedPoints,
-              //   })
-              //   .then((response) => {
-              //     console.log("Balance updated:", response.data.balance);
-              //     alert(
-              //       `Payment successful! ${details.payer.name.given_name}, you've purchased ${this.calculatedPoints}`
-              //     );
-              //     location.reload();
-              //   })
-              //   .catch((error) => {
-              //     alert(`Payment failed!`);
-              //     console.error("Error updating balance:", error);
-              //   });
             });
           },
         })

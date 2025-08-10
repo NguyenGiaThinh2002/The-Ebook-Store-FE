@@ -100,7 +100,6 @@ export default {
                   }
                 )
                 .then((response) => {
-                  console.log("Balance updated:", response.data.balance);
                   alert(
                     `Payment successful! ${details.payer.name.given_name}, you've purchased ${this.calculatedPoints} points.`
                   );

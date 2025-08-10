@@ -324,108 +324,13 @@ export default {
       });
   },
 };
-
-// Tro ly ao
-// var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-
-// const recognition = new SpeechRecognition();
-// const synth = window.speechSynthesis;
-// recognition.lang = 'vi-VI';
-// recognition.continuous = false;
-
-// const microphone = document.querySelector('.microphone');
-
-// const speak = (text) => {
-//     if (synth.speaking) {
-//         console.error('Busy. Speaking...');
-//         return;
-//     }
-
-//     const utter = new SpeechSynthesisUtterance(text);
-
-//     utter.onend = () => {
-//         console.log('SpeechSynthesisUtterance.onend');
-//     }
-//     utter.onerror = (err) => {
-//         console.error('SpeechSynthesisUtterance.onerror', err);
-//     }
-
-//     synth.speak(utter);
-// };
-
-// const handleVoice = (text) => {
-//     console.log('text', text);
-
-//     // "thời tiết tại Đà Nẵng" => ["thời tiết tại", "Đà Nẵng"]
-//     const handledText = text.toLowerCase();
-//     if (handledText.includes('thời tiết tại')) {
-//         // const location = handledText.split('tại')[1].trim();
-//         // console.log('location', location);
-//         // searchInput.value = location;
-//         // const changeEvent = new Event('change');
-//         // searchInput.dispatchEvent(changeEvent);
-//         console.log("Ha noi");
-//         return;
-//     }
-
-//     const container = document.querySelector('.container');
-//     if (handledText.includes('thay đổi màu nền')) {
-//         // const color = handledText.split('màu nền')[1].trim();
-//         // container.style.background = color;
-//         console.log("mau do");
-//         return;
-//     }
-
-//     if (handledText.includes('màu nền mặc định')) {
-//         // container.style.background = '';
-//         console.log("mau mac dinh");
-//         return;
-//     }
-
-//     if (handledText.includes('mấy giờ')) {
-//         // const textToSpeech = `${moment().hours()} hours ${moment().minutes()} minutes`;
-//         // speak(textToSpeech);
-//         console.log("2 gio r");
-//         return;
-//     }
-
-//     speak('Try again');
-// }
-
-// microphone.addEventListener('click', (e) => {
-//     e.preventDefault();
-
-//     recognition.start();
-//     microphone.classList.add('recording');
-// });
-
-// recognition.onspeechend = () => {
-//     recognition.stop();
-//     microphone.classList.remove('recording');
-// }
-
-// recognition.onerror = (err) => {
-//     console.error(err);
-//     microphone.classList.remove('recording');
-// }
-
-// recognition.onresult = (e) => {
-//     console.log('onresult', e);
-//     const text = e.results[0][0].transcript;
-//     handleVoice(text);
-// }
 </script>
 
 <style>
 #header {
   background-color: rgba(255, 255, 255, 0.8);
-  /* box-sizing: border-box;
-  border-bottom: black; */
 }
 
-/* #navbarNav{
-    background-color: rgba(255, 255, 255, 0.8);
-  } */
 #navbar {
   background-color: rgba(255, 255, 255, 0.8);
   border-bottom: 1px solid #00000026;
@@ -467,11 +372,6 @@ a .nav-link .dropdown-toggle {
   padding: 7px 14px;
   border-radius: 50px;
   cursor: pointer;
-
-  /* transition: background-color 0.3s ease-in-out; */
-  /* position: fixed;
-  bottom: 60px; 
-  right: 60px;  */
 }
 
 .cart-button:hover {
@@ -497,44 +397,9 @@ a .nav-link .dropdown-toggle {
   border-radius: 50%;
   padding: 5px 10px;
   font-weight: bold;
-  /* margin-top: 120px; */
 }
 
 .nav-item {
   margin-left: 20px;
 }
-
-/* .microphone-icon {
-  position: absolute;
-  top: 70px;
-  right: 20px; 
-
-}
-
-.microphone{
-  margin-top: 20px;
-  size: 40px;
-
-}
-
-.microphone {
-    cursor: pointer;
-}
-
-.microphone .recording-icon {
-    display: none;
-    width: 10px;
-    height: 10px;
-    background-color: #e22d2d;
-    border-radius: 50%;
-    animation: pulse 1.5s infinite linear;
-}
-
-.microphone.recording .recording-icon {
-    display: inline-block;
-}
-
-.microphone.recording .fa-microphone {
-    display: none;
-} */
 </style>

@@ -146,7 +146,6 @@ export default {
           .catch((err) => {
             console.log(err);
             alert("Login failed");
-            // console.log(token);
           });
       }
     },
@@ -176,7 +175,6 @@ export default {
 
       const res = await fetch("https://api.db-ip.com/v2/free/self");
       const data = await res.json();
-      console.log(data.countryName);
       this.user.region = data.countryName;
       setRegion(data.countryName.toLowerCase());
 
@@ -199,7 +197,6 @@ export default {
     },
     showPassword() {
       var x = document.getElementById("pass1");
-      console.log(x);
       if (x.type === "password") {
         x.type = "text";
       } else {
