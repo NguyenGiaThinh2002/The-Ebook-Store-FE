@@ -133,7 +133,7 @@ export default {
                 )
                 .then(() => {
                   alert("Buy book successfully");
-                  close();
+                  // close();
                   // location.reload();
                 });
             });
